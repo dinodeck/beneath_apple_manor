@@ -1,0 +1,254 @@
+         SBTL  'BAMSUBSE -- BAM ASSEMBLY ROUTINES'
+         ORG   $8000
+         SKP   1
+*********************************************************
+*                                                       *
+*       BAMSUBSE: THIS MODULE CONTAINS SEVERAL ENTRY    *
+*            POINTS FOR USE WITH BAMSE.                 *
+*                                                       *
+*            INIT: CLEARS SCREENS, SETS DEFAULTS        *
+*            PLOT: PLOTS A SINGLE POINT                 *
+*            SCRN: DETERMINES COLOR OF POINT ON SCREEN  *
+*            DRAW: PLOTS A RADIUS AROUND A POINT        *
+*                                                       *
+*       INPUTS: VARIABLES FROM BASIC AS FOLLOWS:        *
+*                                                       *
+*            V:    VERTICAL SIZE OF SCREEN              *
+*            H:    HORIZONTAL SIZE OF SCREEN            *
+*            MODE: 0=HIRES, 1=TEXT                      *
+*            PX:   X LOCATION OF POINT                  *
+*            PY:   Y LOCATION OF POINT                  *
+*            C:    COLOR NUMBER OF POINT                *
+*            MAP:  ARRAY OF MAP CONTENTS                *
+*            RD:   RADIUS FOR DRAW ROUTINE              *
+*                                                       *
+*       PROGRAMMER: DON D WORTH 4/4/82                  *
+*                                                       *
+*********************************************************
+         SKP   1
+*       ZERO PAGE
+         SKP   1
+R0       EQU   0
+BASE     EQU   2          LINE ADDRESS
+PNTR     EQU   4          SCRATCH POINTER
+R1       EQU   6
+R2       EQU   8
+R3       EQU   10
+WTOP     EQU   $22        WINDOW TOP
+WBOT     EQU   $23        WINDOW BOTTOM
+CH       EQU   $24        CURSOR HORIZONTAL
+CV       EQU   $25        CURSOR VERTICAL
+BASL     EQU   $28        SCREEN LINE BASE ADDRESS
+COLR     EQU   $30        LORES COLOR
+ACL      EQU   $50        WORK LOCATIONS
+AUXL     EQU   $54
+         SKP   1
+IN       EQU   $200       LINE INPUT BUFFER
+DOS      EQU   $3D3       DOS COLDSTART
+RWTS     EQU   $3D9       RWTS
+RWTSP    EQU   $3E3       LOCATE RWTS PARMLIST
+CLEAR    EQU   $FC58      MONITOR CLEAR SCREEN
+VTAB     EQU   $FB5B      MONITOR VERTICAL TAB
+SETVID   EQU   $FE93      MONITOR SET PR#0
+SETKBD   EQU   $FE89      MONITOR SET IN#0
+COUT     EQU   $FDED      MONITOR CRT OUTPUT
+SETNORM  EQU   $FE84      MONITOR SET NORMAL DISPLAY
+SETINV   EQU   $FE80      MONITOR SET INVERSE
+OUTPRT   EQU   $FE95      MONITOR SET OUTPUT DEVICE
+GETLN    EQU   $FD6A      MONITOR GET LINE
+PRBYTE   EQU   $FDDA      MONITOR HEX PRINT
+CLREOL   EQU   $FC9C      MONITOR CLEAR TO END OF LINE
+CLREOP   EQU   $FC42      MONITOR CLEAR TO END OF PAGE
+BASCLC   EQU   $FBC1      TEXT LINE BASE CALCULATION
+KBD      EQU   $C000      KEYBOARD LATCH
+KBDSTB   EQU   $C010      KEYBOARD STROBE
+GR       EQU   $C050      GRAPHICS MODE
+TEXT     EQU   $C051      TEXT MODE
+MIXED    EQU   $C053      MIXED TEXT/GRAPHICS
+PRIME    EQU   $C054      PRIMARY PAGE
+HIRES    EQU   $C057      HIRES GRAPHICS
+PAGE1    EQU   $2000      HIRES PAGE
+PAGE2    EQU   $4000      SECOND PAGE
+         SKP   1
+RETURN   EQU   $8D        CARRIAGE RETURN
+SPACE    EQU   $A0        BLANK
+         SKP   2
+         JMP   INIT       MODULE HEADER
+         ASC   'INIT    '
+         DS    2
+         DS    2
+         SKP   1
+         DFB   $FF,$F1    INSTRUCTIONS
+         SKP   3
+*       INITIALIZATION CALL     
+         SKP   1
+INIT     JSR   INPUT      SAVE REGS
+         LDA   #0
+         STA   DISP       DISPLACEMENT
+         LDA   MODE
+         BNE   TEXC       SET TEXT MODE
+         SKP   1
+         LDA   #>PAGE1
+         STA   R0
+         LDA   #<PAGE1
+         STA   R0+1
+CLRGR0   LDY   #0
+         TYA
+CLRGR    STA   (R0),Y     ERASE GRAPHICS PAGE
+         INY
+         BNE   CLRGR
+         INC   R0+1
+         LDA   R0+1
+         CMP   #<PAGE2
+         BCC   CLRGR0
+         LDA   MIXED      MIXED GRAPHICS
+         LDA   GR         GRAPHICS MODE
+         LDA   HIRES      HIRES GRAPHICS
+         JSR   BLDTAB     BUILD LINE ADDRESS TABLES
+         JMP   SETW
+         SKP   1
+TEXC     LDA   TEXT       SET TEXT MODE
+         LDA   #40
+         SEC
+         SBC   H
+         LSR   A          DISP=(40-H)/2
+         STA   DISP
+         SKP   1
+SETW     LDA   CH         CLEAR TOP OF SCREEN
+         PHA
+         LDA   CV
+         PHA
+         LDA   #0         TOP PART OF SCREEN ONLY
+         STA   WTOP
+         LDA   #20
+         STA   WBOT
+         JSR   CLEAR      CLEAR IT
+         PLA
+         STA   CV         RESTORE CURSOR LOCATION
+         PLA
+         STA   CH
+         SKP   1
+         LDA   #20
+         STA   WTOP       BOTTOM PART OF SCREEN FOR TEXT
+         LDA   #23
+         STA   WBOT
+         JMP   OUTPT      RESTORE REGS AND EXIT
+         SKP   1
+*       FOR HIRES MODE, BUILD LINE ADDRESS TABLES
+         SKP   1
+BLDTAB   LDA   #0         START WITH LINE 0
+         STA   R0
+         SKP   1
+TABLP    LDA   R0         COMPUTE LINE ADDRESS
+         AND   #$C0
+         STA   R1
+         LSR   A
+         LSR   A
+         ORA   R1
+         STA   R1
+         LDA   R0
+         STA   R1+1
+         ASL   A
+         ASL   A
+         ASL   A
+         ROL   R1+1
+         ASL   A
+         ROL   R1+1
+         ASL   A
+         ROR   R1
+         LDA   R1+1
+         AND   #$1F
+         ORA   #$20
+         STA   R1+1
+         SKP   1
+         LDX   R0
+         LDA   R1
+         STA   HGL,X
+         LDA   R1+1
+         STA   HGH,X
+         INX
+         STX   R0
+         CPX   #160       DO 160 LINES
+         BCC   TABLP
+         RTS
+         SKP   2
+         DFB   $FF,$F0    END OF SECTION
+         SKP   2
+         JMP   INPUT      MODULE HEADER
+         ASC   'INPUT   '
+         DS    2
+         DS    2
+         SKP   1
+         DFB   $FF,$F1    INSTRUCTIONS
+         SKP   3
+*       INPUT: SAVE REGS, LOCATE VARIABLES
+         SKP   1
+INPUT    STA   AREG       SAVE REGS
+         STY   YREG
+         STX   XREG
+         LDA   BASL       SAVE TEXT LINE BASE
+         STA   BASS
+         LDA   BASL+1
+         STA   BASS+1
+         SKP   1
+         LDA   #>VARS
+         STA   R0
+         LDA   #<VARS
+         STA   R0+1
+         LDX   #8         NUMBER OF VARIABLES
+         SKP   1
+INPLP    LDY   #2         COPY VALUES OF VARIABLES
+         LDA   (R0),Y
+         STA   R1+1
+         DEY
+         LDA   (R0),Y
+         STA   R1         
+         DEY
+         LDA   (R1),Y
+         STA   (R0),Y
+         CLC
+         INC   R0         STILL IN SAME PAGE
+         INC   R0
+         INC   R0
+         DEX
+         BNE   INPLP
+         RTS
+         DFB   $FF,$F0    END OF SECTION
+         SKP   2
+         JMP   OUTPT      MODULE HEADER
+         ASC   'OUTPT   '
+         DS    2
+         DS    2
+         SKP   1
+         DFB   $FF,$F1    INSTRUCTIONS
+         SKP   3
+*       OUTPT: RESTORE REGISTERS
+         SKP   1
+OUTPT    LDA   BASS
+         STA   BASL
+         LDA   BASS+1
+         STA   BASL+1
+         LDA   AREG       RESTORE REGS
+         LDY   YREG
+         LDX   XREG
+         RTS
+         SKP   2
+         DFB   $FF,$F4    DATA
+         SKP   1
+AREG     DS    1
+XREG     DS    1
+YREG     DS    1
+BASS     DS    2
+         SKP   2
+         DFB   $FF,$F3    GLOBALS
+         SKP   1
+PLOT     JMP   $0
+         ASC   'PLOT    '
+SCRN     JMP   $0
+         ASC   'SCRN    '
+DRAW     JMP   $0
+         ASC   'DRAW    '
+         SKP   2
+         DFB   $FF,$F0    END OF SECTION
+         LST   OFF
+         CHN   COMMON.S

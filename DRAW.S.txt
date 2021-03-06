@@ -1,0 +1,202 @@
+         SBTL  'DRAW - BAMSUB ROUTINE'
+         ORG   $8000
+         SKP   1
+*********************************************************
+*                                                       *
+*       DRAW: THIS ROUTINE PLOTS A RADIUS OF POINTS     *
+*            AROUND A GIVEN ONE USING THE MAP.          *
+*                                                       *
+*            V:    VERTICAL SIZE OF SCREEN              *
+*            H:    HORIZONTAL SIZE OF SCREEN            *
+*            MODE: 0=HIRES, 1=TEXT                      *
+*            PX:   X LOCATION OF POINT                  *
+*            PY:   Y LOCATION OF POINT                  *
+*            C:    COLOR NUMBER OF POINT                *
+*            MAP:  ARRAY OF MAP CONTENTS                *
+*            RD:   RADIUS FOR DRAW ROUTINE              *
+*                                                       *
+*       PROGRAMMER: DON D WORTH 4/4/82                  *
+*                                                       *
+*********************************************************
+         SKP   1
+*       ZERO PAGE
+         SKP   1
+R0       EQU   0
+BASE     EQU   2          LINE ADDRESS
+PNTR     EQU   4          SCRATCH POINTER
+R1       EQU   6
+R2       EQU   8
+R3       EQU   10
+SX       EQU   12
+EX       EQU   13         
+SY       EQU   14
+EY       EQU   15         
+DELT     EQU   16
+WTOP     EQU   $22        WINDOW TOP
+WBOT     EQU   $23        WINDOW BOTTOM
+CH       EQU   $24        CURSOR HORIZONTAL
+CV       EQU   $25        CURSOR VERTICAL
+BASL     EQU   $28        SCREEN LINE BASE ADDRESS
+COLR     EQU   $30        LORES COLOR
+ACL      EQU   $50        WORK LOCATIONS
+AUXL     EQU   $54
+         SKP   1
+IN       EQU   $200       LINE INPUT BUFFER
+DOS      EQU   $3D3       DOS COLDSTART
+RWTS     EQU   $3D9       RWTS
+RWTSP    EQU   $3E3       LOCATE RWTS PARMLIST
+INIT     EQU   $FB2F      MONITOR INIT SCREEN
+CLEAR    EQU   $FC58      MONITOR CLEAR SCREEN
+VTAB     EQU   $FB5B      MONITOR VERTICAL TAB
+SETVID   EQU   $FE93      MONITOR SET PR#0
+SETKBD   EQU   $FE89      MONITOR SET IN#0
+COUT     EQU   $FDED      MONITOR CRT OUTPUT
+SETNORM  EQU   $FE84      MONITOR SET NORMAL DISPLAY
+SETINV   EQU   $FE80      MONITOR SET INVERSE
+OUTPRT   EQU   $FE95      MONITOR SET OUTPUT DEVICE
+GETLN    EQU   $FD6A      MONITOR GET LINE
+PRBYTE   EQU   $FDDA      MONITOR HEX PRINT
+CLREOL   EQU   $FC9C      MONITOR CLEAR TO END OF LINE
+CLREOP   EQU   $FC42      MONITOR CLEAR TO END OF PAGE
+BASCLC   EQU   $FBC1      TEXT LINE BASE CALCULATION
+KBD      EQU   $C000      KEYBOARD LATCH
+KBDSTB   EQU   $C010      KEYBOARD STROBE
+GR       EQU   $C050      GRAPHICS MODE
+TEXT     EQU   $C051      TEXT MODE
+MIXED    EQU   $C053      MIXED TEXT/GRAPHICS
+PRIME    EQU   $C054      PRIMARY PAGE
+HIRES    EQU   $C057      HIRES GRAPHICS
+PAGE1    EQU   $2000      HIRES PAGE
+         SKP   1
+RETURN   EQU   $8D        CARRIAGE RETURN
+SPACE    EQU   $A0        BLANK
+         SKP   2
+         JMP   DRAW       MODULE HEADER
+         ASC   'DRAW    '
+         DS    2
+         DS    2
+         SKP   1
+         DFB   $FF,$F1    INSTRUCTIONS
+         SKP   3
+*       FIND VARIABLES
+         SKP   1
+DRAW     JSR   INPUT      SAVE REGS
+         SKP   1
+*       COMPUTE SOME THINGS FIRST
+         SKP   1
+         LDA   PX
+         SEC
+         SBC   RD
+         BPL   DR01
+         LDA   #0
+DR01     STA   SX         SX=X-RD
+         SKP   1
+         SEC
+         LDA   PX
+         ADC   RD
+         CMP   H
+         BCC   DR02
+         LDA   H
+DR02     STA   EX         EX=X+RD+1
+         SKP   1
+         LDA   PY
+         SEC
+         SBC   RD
+         BPL   DR03
+         LDA   #0
+DR03     STA   SY         SY=Y-RD
+         SKP   1
+         SEC
+         LDA   PY
+         ADC   RD
+         CMP   V
+         BCC   DR04
+         LDA   V
+DR04     STA   EY         EY=Y+RD+1
+         SKP   1
+         LDA   EX
+         SEC
+         SBC   SX
+         ASL   A          (EX-SX)*2
+         STA   R0
+         LDA   H
+         ASL   A          ROWL=H*2
+         SEC
+         SBC   R0
+         STA   DELT       DELT=ROWL-(EX-SX)*2
+         SKP   1
+         LDA   SY
+         STA   PY
+         ASL   A
+         STA   AUXL
+         LDA   H
+         STA   ACL
+         LDA   #0
+         STA   ACL+1
+         STA   ACL+2
+         STA   ACL+3
+         STA   AUXL+1
+         JSR   MULT       SY*2*H
+         LDA   SX
+         STA   PX
+         ASL   A          SX*2
+         CLC
+         ADC   ACL
+         STA   ACL
+         LDA   #0
+         ADC   ACL+1
+         STA   ACL+1      SY*2*H+SX*2
+         SKP   1
+         LDA   MAP+1
+         CLC
+         ADC   ACL
+         STA   PNTR
+         LDA   MAP+2
+         ADC   ACL+1
+         STA   PNTR+1
+         SKP   1
+DRLP     LDY   #0
+         LDA   (PNTR),Y   FIND MAP COLOR
+         STA   C
+         JSR   PLOTI      PLOT IT
+         SKP   1
+         CLC
+         LDA   PNTR
+         ADC   #2         SKIP ONE INTEGER
+         STA   PNTR
+         LDA   PNTR+1
+         ADC   #0
+         STA   PNTR+1
+         INC   PX         X=X+1
+         LDA   PX
+         CMP   EX
+         BCC   DRLP       END OF THIS LINE?
+         LDA   SX
+         STA   PX         NEW LINE, X=SX
+         INC   PY
+         LDA   DELT       LENGTH OF ARRAY LINES
+         CLC
+         ADC   PNTR
+         STA   PNTR
+         LDA   #0
+         ADC   PNTR+1
+         STA   PNTR+1     PNTR=PNTR+DELT (ONE LINE)
+         LDA   PY
+         CMP   EY         END OF LINES TO DO?
+         BCC   DRLP
+         JMP   OUTPT      YES, EXIT
+         SKP   2
+         DFB   $FF,$F3    GLOBALS
+         SKP   1
+INPUT    JMP   $0
+         ASC   'INPUT   '
+OUTPT    JMP   $0
+         ASC   'OUTPT   '
+PLOTI    JMP   $0
+         ASC   'PLOTI   '
+MULT     JMP   $0
+         ASC   'MULT    '
+         SKP   2
+         DFB   $FF,$F0    END OF SECTION
+         LST   OFF
+         CHN   COMMON.S

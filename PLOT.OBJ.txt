@@ -1,0 +1,554 @@
+8000-   4C 33 80    JMP   $8033
+8003-   D0 CC       BNE   $7FD1
+8005-   CF          ???
+8006-   D4          ???
+8007-   A0 A0       LDY   #$A0
+8009-   A0 A0       LDY   #$A0
+800B-   A0 A0       LDY   #$A0
+800D-   A0 A0       LDY   #$A0
+800F-   FF          ???
+8010-   F0 4C       BEQ   $805E
+8012-   3E 80 D3    ROL   $D380,X
+8015-   C3          ???
+8016-   D2 CE       CMP   ($CE)
+8018-   A0 A0       LDY   #$A0
+801A-   A0 A0       LDY   #$A0
+801C-   A0 80       LDY   #$80
+801E-   D4          ???
+801F-   A6 FF       LDX   $FF
+8021-   F0 4C       BEQ   $806F
+8023-   36 80       ROL   $80,X
+8025-   D0 CC       BNE   $7FF3
+8027-   CF          ???
+8028-   D4          ???
+8029-   C9 A0       CMP   #$A0
+802B-   A0 A0       LDY   #$A0
+802D-   A0 A4       LDY   #$A4
+802F-   E6 A0       INC   $A0
+8031-   FF          ???
+8032-   F1 20       SBC   ($20),Y
+8034-   FD 82 AD    SBC   $AD82,X
+8037-   1B          ???
+8038-   08          PHP
+8039-   D0 27       BNE   $8062
+803B-   4C 08 83    JMP   $8308
+803E-   20 FD 82    JSR   $82FD
+8041-   20 D6 80    JSR   $80D6
+8044-   B1 28       LDA   ($28),Y
+8046-   A2 0F       LDX   #$0F
+8048-   DD E7 80    CMP   $80E7,X
+804B-   F0 03       BEQ   $8050
+804D-   CA          DEX
+804E-   D0 F8       BNE   $8048
+8050-   AD 1C 08    LDA   $081C
+8053-   85 00       STA   $00
+8055-   AD 1D 08    LDA   $081D
+8058-   85 01       STA   $01
+805A-   A0 00       LDY   #$00
+805C-   8A          TXA
+805D-   91 00       STA   ($00),Y
+805F-   4C 3B 80    JMP   $803B
+8062-   20 D6 80    JSR   $80D6
+8065-   AE 1B 08    LDX   $081B
+8068-   BD E7 80    LDA   $80E7,X
+806B-   D1 28       CMP   ($28),Y
+806D-   F0 CC       BEQ   $803B
+806F-   91 28       STA   ($28),Y
+8071-   AD 12 08    LDA   $0812
+8074-   D0 C5       BNE   $803B
+8076-   AD 18 08    LDA   $0818
+8079-   0A          ASL
+807A-   0A          ASL
+807B-   0A          ASL
+807C-   0A          ASL
+807D-   85 06       STA   $06
+807F-   A9 10       LDA   #$10
+8081-   85 07       STA   $07
+8083-   AD 1B 08    LDA   $081B
+8086-   85 08       STA   $08
+8088-   A9 00       LDA   #$00
+808A-   85 09       STA   $09
+808C-   A2 05       LDX   #$05
+808E-   06 08       ASL   $08
+8090-   26 09       ROL   $09
+8092-   CA          DEX
+8093-   D0 F9       BNE   $808E
+8095-   18          CLC
+8096-   AD F9 82    LDA   $82F9
+8099-   65 08       ADC   $08
+809B-   85 08       STA   $08
+809D-   AD FA 82    LDA   $82FA
+80A0-   65 09       ADC   $09
+80A2-   85 09       STA   $09
+80A4-   AD 15 08    LDA   $0815
+80A7-   0A          ASL
+80A8-   A8          TAY
+80A9-   A6 06       LDX   $06
+80AB-   BD C5 08    LDA   $08C5,X
+80AE-   85 00       STA   $00
+80B0-   BD 25 08    LDA   $0825,X
+80B3-   85 01       STA   $01
+80B5-   A2 00       LDX   #$00
+80B7-   A1 08       LDA   ($08,X)
+80B9-   91 00       STA   ($00),Y
+80BB-   E6 08       INC   $08
+80BD-   D0 02       BNE   $80C1
+80BF-   E6 09       INC   $09
+80C1-   A1 08       LDA   ($08,X)
+80C3-   C8          INY
+80C4-   91 00       STA   ($00),Y
+80C6-   88          DEY
+80C7-   E6 08       INC   $08
+80C9-   D0 02       BNE   $80CD
+80CB-   E6 09       INC   $09
+80CD-   E6 06       INC   $06
+80CF-   C6 07       DEC   $07
+80D1-   D0 D6       BNE   $80A9
+80D3-   4C 3B 80    JMP   $803B
+80D6-   AD 18 08    LDA   $0818
+80D9-   20 C1 FB    JSR   $FBC1    F8ROM:BASCALC
+80DC-   18          CLC
+80DD-   AD 15 08    LDA   $0815
+80E0-   6D 24 08    ADC   $0824
+80E3-   A8          TAY
+80E4-   60          RTS
+80E5-   FF          ???
+80E6-   F4          ???
+80E7-   B0 04       BCS   $80ED
+80E9-   59 17 BF    EOR   $BF17,Y
+80EC-   20 BF BF    JSR   $BFBF
+80EF-   23          ???
+80F0-   14 20       TRB   $20
+80F2-   BF          ???
+80F3-   13          ???
+80F4-   24 16       BIT   $16
+80F6-   07          ???
+80F7-   00          BRK
+80F8-   00          BRK
+80F9-   00          BRK
+80FA-   00          BRK
+80FB-   00          BRK
+80FC-   00          BRK
+80FD-   00          BRK
+80FE-   00          BRK
+80FF-   00          BRK
+8100-   00          BRK
+8101-   00          BRK
+8102-   00          BRK
+8103-   00          BRK
+8104-   00          BRK
+8105-   00          BRK
+8106-   00          BRK
+8107-   00          BRK
+8108-   00          BRK
+8109-   00          BRK
+810A-   00          BRK
+810B-   00          BRK
+810C-   00          BRK
+810D-   00          BRK
+810E-   00          BRK
+810F-   00          BRK
+8110-   00          BRK
+8111-   00          BRK
+8112-   00          BRK
+8113-   00          BRK
+8114-   00          BRK
+8115-   00          BRK
+8116-   00          BRK
+8117-   7F          ???
+8118-   7F          ???
+8119-   5D 7F 59    EOR   $597F,X
+811C-   77          ???
+811D-   01 55       ORA   ($55,X)
+811F-   21 55       AND   ($55,X)
+8121-   21 5D       AND   ($5D,X)
+8123-   21 7F       AND   ($7F,X)
+8125-   29 7D       AND   #$7D
+8127-   29 7F       AND   #$7F
+8129-   2D 7D 3F    AND   $3F7D
+812C-   75 7F       ADC   $7F,X
+812E-   75 7F       ADC   $7F,X
+8130-   75 3F       ADC   $3F,X
+8132-   75 2B       ADC   $2B,X
+8134-   7D 7F 7F    ADC   $7F7F,X
+8137-   FF          ???
+8138-   FF          ???
+8139-   FF          ???
+813A-   FF          ???
+813B-   BF          ???
+813C-   FF          ???
+813D-   9F          ???
+813E-   FE 9D F6    INC   $F69D,X
+8141-   9D EA 8D    STA   $8DEA,X
+8144-   EA          NOP
+8145-   85 EA       STA   $EA
+8147-   91 EA       STA   ($EA),Y
+8149-   DD EA 8F    CMP   $8FEA,X
+814C-   EA          NOP
+814D-   C7          ???
+814E-   EA          NOP
+814F-   E7          ???
+8150-   EB          ???
+8151-   E7          ???
+8152-   F3          ???
+8153-   E7          ???
+8154-   F3          ???
+8155-   FF          ???
+8156-   FF          ???
+8157-   7F          ???
+8158-   7F          ???
+8159-   7F          ???
+815A-   7A          PLY
+815B-   5F          ???
+815C-   68          PLA
+815D-   5F          ???
+815E-   68          PLA
+815F-   5F          ???
+8160-   68          PLA
+8161-   7F          ???
+8162-   7A          PLY
+8163-   5F          ???
+8164-   7E 57 7F    ROR   $7F57,X
+8167-   57          ???
+8168-   7A          PLY
+8169-   7F          ???
+816A-   6A          ROR
+816B-   7F          ???
+816C-   6B          ???
+816D-   7F          ???
+816E-   6B          ???
+816F-   57          ???
+8170-   7A          PLY
+8171-   55 7E       EOR   $7E,X
+8173-   7F          ???
+8174-   7F          ???
+8175-   7F          ???
+8176-   7F          ???
+8177-   00          BRK
+8178-   00          BRK
+8179-   00          BRK
+817A-   00          BRK
+817B-   00          BRK
+817C-   00          BRK
+817D-   00          BRK
+817E-   00          BRK
+817F-   00          BRK
+8180-   00          BRK
+8181-   00          BRK
+8182-   00          BRK
+8183-   00          BRK
+8184-   00          BRK
+8185-   00          BRK
+8186-   00          BRK
+8187-   00          BRK
+8188-   00          BRK
+8189-   00          BRK
+818A-   00          BRK
+818B-   00          BRK
+818C-   00          BRK
+818D-   00          BRK
+818E-   00          BRK
+818F-   00          BRK
+8190-   00          BRK
+8191-   00          BRK
+8192-   00          BRK
+8193-   00          BRK
+8194-   00          BRK
+8195-   00          BRK
+8196-   00          BRK
+8197-   7F          ???
+8198-   7F          ???
+8199-   63          ???
+819A-   7F          ???
+819B-   5D 67 63    EOR   $6367,X
+819E-   5B          ???
+819F-   7F          ???
+81A0-   67          ???
+81A1-   0F          ???
+81A2-   7C 77 7B    JMP   ($7B77,X)
+81A5-   77          ???
+81A6-   7B          ???
+81A7-   77          ???
+81A8-   7B          ???
+81A9-   0F          ???
+81AA-   7C 7F 67    JMP   ($677F,X)
+81AD-   63          ???
+81AE-   5B          ???
+81AF-   5D 5B 63    EOR   $635B,X
+81B2-   5B          ???
+81B3-   7F          ???
+81B4-   67          ???
+81B5-   7F          ???
+81B6-   7F          ???
+81B7-   00          BRK
+81B8-   00          BRK
+81B9-   00          BRK
+81BA-   00          BRK
+81BB-   00          BRK
+81BC-   00          BRK
+81BD-   00          BRK
+81BE-   00          BRK
+81BF-   00          BRK
+81C0-   00          BRK
+81C1-   00          BRK
+81C2-   00          BRK
+81C3-   00          BRK
+81C4-   00          BRK
+81C5-   00          BRK
+81C6-   00          BRK
+81C7-   00          BRK
+81C8-   00          BRK
+81C9-   00          BRK
+81CA-   00          BRK
+81CB-   00          BRK
+81CC-   00          BRK
+81CD-   00          BRK
+81CE-   00          BRK
+81CF-   00          BRK
+81D0-   00          BRK
+81D1-   00          BRK
+81D2-   00          BRK
+81D3-   00          BRK
+81D4-   00          BRK
+81D5-   00          BRK
+81D6-   00          BRK
+81D7-   00          BRK
+81D8-   00          BRK
+81D9-   00          BRK
+81DA-   00          BRK
+81DB-   00          BRK
+81DC-   00          BRK
+81DD-   00          BRK
+81DE-   00          BRK
+81DF-   00          BRK
+81E0-   00          BRK
+81E1-   00          BRK
+81E2-   00          BRK
+81E3-   00          BRK
+81E4-   00          BRK
+81E5-   00          BRK
+81E6-   00          BRK
+81E7-   00          BRK
+81E8-   00          BRK
+81E9-   00          BRK
+81EA-   00          BRK
+81EB-   00          BRK
+81EC-   00          BRK
+81ED-   00          BRK
+81EE-   00          BRK
+81EF-   00          BRK
+81F0-   00          BRK
+81F1-   00          BRK
+81F2-   00          BRK
+81F3-   00          BRK
+81F4-   00          BRK
+81F5-   00          BRK
+81F6-   00          BRK
+81F7-   FF          ???
+81F8-   FF          ???
+81F9-   AF          ???
+81FA-   FD AB F5    SBC   $F5AB,X
+81FD-   AB          ???
+81FE-   F5 AA       SBC   $AA,X
+8200-   D5 8A       CMP   $8A,X
+8202-   80 8A       BRA   $818E
+8204-   80 A8       BRA   $81AE
+8206-   D5 A8       CMP   $A8,X
+8208-   D5 A8       CMP   $A8,X
+820A-   D5 A8       CMP   $A8,X
+820C-   D5 8A       CMP   $8A,X
+820E-   80 8A       BRA   $819A
+8210-   80 AA       BRA   $81BC
+8212-   D5 AA       CMP   $AA,X
+8214-   D5 FF       CMP   $FF,X
+8216-   FF          ???
+8217-   7F          ???
+8218-   7F          ???
+8219-   7F          ???
+821A-   7F          ???
+821B-   7F          ???
+821C-   6F          ???
+821D-   7F          ???
+821E-   47          ???
+821F-   7F          ???
+8220-   46 3F       LSR   $3F
+8222-   6C 3F 6C    JMP   ($6C3F)
+8225-   07          ???
+8226-   60          RTS
+8227-   3B          ???
+8228-   70 45       BVS   $826F
+822A-   78          SEI
+822B-   6D 78 6D    ADC   $6D78
+822E-   78          SEI
+822F-   3B          ???
+8230-   78          SEI
+8231-   07          ???
+8232-   79 1F 73    ADC   $731F,Y
+8235-   7F          ???
+8236-   7F          ???
+8237-   7F          ???
+8238-   7F          ???
+8239-   63          ???
+823A-   7F          ???
+823B-   5D 67 63    EOR   $6367,X
+823E-   5B          ???
+823F-   7F          ???
+8240-   67          ???
+8241-   0F          ???
+8242-   7C 77 7B    JMP   ($7B77,X)
+8245-   77          ???
+8246-   7B          ???
+8247-   77          ???
+8248-   7B          ???
+8249-   0F          ???
+824A-   7C 7F 67    JMP   ($677F,X)
+824D-   63          ???
+824E-   5B          ???
+824F-   5D 5B 63    EOR   $635B,X
+8252-   5B          ???
+8253-   7F          ???
+8254-   67          ???
+8255-   7F          ???
+8256-   7F          ???
+8257-   00          BRK
+8258-   00          BRK
+8259-   00          BRK
+825A-   00          BRK
+825B-   00          BRK
+825C-   00          BRK
+825D-   00          BRK
+825E-   00          BRK
+825F-   00          BRK
+8260-   00          BRK
+8261-   00          BRK
+8262-   00          BRK
+8263-   00          BRK
+8264-   00          BRK
+8265-   00          BRK
+8266-   00          BRK
+8267-   00          BRK
+8268-   00          BRK
+8269-   00          BRK
+826A-   00          BRK
+826B-   00          BRK
+826C-   00          BRK
+826D-   00          BRK
+826E-   00          BRK
+826F-   00          BRK
+8270-   00          BRK
+8271-   00          BRK
+8272-   00          BRK
+8273-   00          BRK
+8274-   00          BRK
+8275-   00          BRK
+8276-   00          BRK
+8277-   7F          ???
+8278-   7F          ???
+8279-   7F          ???
+827A-   7F          ???
+827B-   7F          ???
+827C-   7F          ???
+827D-   7F          ???
+827E-   7F          ???
+827F-   7F          ???
+8280-   7F          ???
+8281-   3F          ???
+8282-   7D 2F 75    ADC   $752F,X
+8285-   0B          ???
+8286-   51 2B       EOR   ($2B),Y
+8288-   55 2B       EOR   $2B,X
+828A-   54          ???
+828B-   2F          ???
+828C-   75 3F       ADC   $3F,X
+828E-   7D 7F 7F    ADC   $7F7F,X
+8291-   7F          ???
+8292-   7F          ???
+8293-   7F          ???
+8294-   7F          ???
+8295-   7F          ???
+8296-   7F          ???
+8297-   FF          ???
+8298-   FF          ???
+8299-   FF          ???
+829A-   FF          ???
+829B-   FF          ???
+829C-   FF          ???
+829D-   8F          ???
+829E-   F1 8B       SBC   ($8B),Y
+82A0-   D1 8B       CMP   ($8B),Y
+82A2-   D1 83       CMP   ($83),Y
+82A4-   C0 8B       CPY   #$8B
+82A6-   D0 8B       BNE   $8233
+82A8-   D0 8B       BNE   $8235
+82AA-   D1 8B       CMP   ($8B),Y
+82AC-   D1 83       CMP   ($83),Y
+82AE-   C0 FF       CPY   #$FF
+82B0-   FF          ???
+82B1-   FF          ???
+82B2-   FF          ???
+82B3-   FF          ???
+82B4-   FF          ???
+82B5-   FF          ???
+82B6-   FF          ???
+82B7-   7F          ???
+82B8-   7F          ???
+82B9-   7F          ???
+82BA-   7F          ???
+82BB-   37          ???
+82BC-   76 4F       ROR   $4F,X
+82BE-   79 5F 7D    ADC   $7D5F,Y
+82C1-   0F          ???
+82C2-   78          SEI
+82C3-   47          ???
+82C4-   71 47       ADC   ($47),Y
+82C6-   71 47       ADC   ($47),Y
+82C8-   71 07       ADC   ($07),Y
+82CA-   70 07       BVS   $82D3
+82CC-   70 07       BVS   $82D5
+82CE-   70 07       BVS   $82D7
+82D0-   70 07       BVS   $82D9
+82D2-   70 03       BVS   $82D7
+82D4-   60          RTS
+82D5-   7F          ???
+82D6-   7F          ???
+82D7-   7F          ???
+82D8-   7F          ???
+82D9-   1F          ???
+82DA-   7C 4F 7B    JMP   ($7B4F,X)
+82DD-   49 4B       EOR   #$4B
+82DF-   65 53       ADC   $53
+82E1-   79 5F 73    ADC   $735F,Y
+82E4-   5F          ???
+82E5-   67          ???
+82E6-   6F          ???
+82E7-   4F          ???
+82E8-   77          ???
+82E9-   4F          ???
+82EA-   7B          ???
+82EB-   4F          ???
+82EC-   7D 67 7E    ADC   $7E67,X
+82EF-   33          ???
+82F0-   7F          ???
+82F1-   69 7F       ADC   #$7F
+82F3-   7F          ???
+82F4-   7F          ???
+82F5-   7F          ???
+82F6-   7F          ???
+82F7-   FF          ???
+82F8-   F2 F7       SBC   ($F7)
+82FA-   80 FF       BRA   $82FB
+82FC-   F3          ???
+82FD-   4C 00 00    JMP   $0000
+8300-   C9 CE       CMP   #$CE
+8302-   D0 D5       BNE   $82D9
+8304-   D4          ???
+8305-   A0 A0       LDY   #$A0
+8307-   A0 4C       LDY   #$4C
+8309-   00          BRK
+830A-   00          BRK
+830B-   CF          ???
+830C-   D5 D4       CMP   $D4,X
+830E-   D0 D4       BNE   $82E4
+8310-   A0 A0       LDY   #$A0
+8312-   A0 FF       LDY   #$FF
+8314-   F0 00       BEQ   $8316

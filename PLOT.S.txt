@@ -1,0 +1,287 @@
+         SBTL  'PLOT/SCRN - BAMSUB ROUTINES'
+         ORG   $8000
+         SKP   1
+*********************************************************
+*                                                       *
+*       PLOT: THIS ROUTINE PLOTS A SINGLE POINT WHEN    *
+*            PASSED A SPECIFIC COLOR NUMBER.            *
+*                                                       *
+*       SCRN: THIS ROUTINE RETURNS THE COLOR AT A       *
+*            GIVEN SCREEN LOCATION                      *
+*                                                       *
+*            V:    VERTICAL SIZE OF SCREEN              *
+*            H:    HORIZONTAL SIZE OF SCREEN            *
+*            MODE: 0=HIRES, 1=TEXT                      *
+*            PX:   X LOCATION OF POINT                  *
+*            PY:   Y LOCATION OF POINT                  *
+*            C:    COLOR NUMBER OF POINT                *
+*            MAP:  ARRAY OF MAP CONTENTS                *
+*            RD:   RADIUS FOR DRAW ROUTINE              *
+*                                                       *
+*       PROGRAMMER: DON D WORTH 4/4/82                  *
+*                                                       *
+*********************************************************
+         SKP   1
+*       ZERO PAGE
+         SKP   1
+R0       EQU   0
+BASE     EQU   2          LINE ADDRESS
+PNTR     EQU   4          SCRATCH POINTER
+R1       EQU   6
+R2       EQU   8
+R3       EQU   10
+WTOP     EQU   $22        WINDOW TOP
+WBOT     EQU   $23        WINDOW BOTTOM
+CH       EQU   $24        CURSOR HORIZONTAL
+CV       EQU   $25        CURSOR VERTICAL
+BASL     EQU   $28        SCREEN LINE BASE ADDRESS
+COLR     EQU   $30        LORES COLOR
+ACL      EQU   $50        WORK LOCATIONS
+AUXL     EQU   $54
+         SKP   1
+IN       EQU   $200       LINE INPUT BUFFER
+DOS      EQU   $3D3       DOS COLDSTART
+RWTS     EQU   $3D9       RWTS
+RWTSP    EQU   $3E3       LOCATE RWTS PARMLIST
+INIT     EQU   $FB2F      MONITOR INIT SCREEN
+CLEAR    EQU   $FC58      MONITOR CLEAR SCREEN
+VTAB     EQU   $FB5B      MONITOR VERTICAL TAB
+SETVID   EQU   $FE93      MONITOR SET PR#0
+SETKBD   EQU   $FE89      MONITOR SET IN#0
+COUT     EQU   $FDED      MONITOR CRT OUTPUT
+SETNORM  EQU   $FE84      MONITOR SET NORMAL DISPLAY
+SETINV   EQU   $FE80      MONITOR SET INVERSE
+OUTPRT   EQU   $FE95      MONITOR SET OUTPUT DEVICE
+GETLN    EQU   $FD6A      MONITOR GET LINE
+PRBYTE   EQU   $FDDA      MONITOR HEX PRINT
+CLREOL   EQU   $FC9C      MONITOR CLEAR TO END OF LINE
+CLREOP   EQU   $FC42      MONITOR CLEAR TO END OF PAGE
+BASCLC   EQU   $FBC1      TEXT LINE BASE CALCULATION
+KBD      EQU   $C000      KEYBOARD LATCH
+KBDSTB   EQU   $C010      KEYBOARD STROBE
+GR       EQU   $C050      GRAPHICS MODE
+TEXT     EQU   $C051      TEXT MODE
+MIXED    EQU   $C053      MIXED TEXT/GRAPHICS
+PRIME    EQU   $C054      PRIMARY PAGE
+HIRES    EQU   $C057      HIRES GRAPHICS
+PAGE1    EQU   $2000      HIRES PAGE
+         SKP   1
+RETURN   EQU   $8D        CARRIAGE RETURN
+SPACE    EQU   $A0        BLANK
+         SKP   2
+         JMP   PLOT       MODULE HEADER
+         ASC   'PLOT    '
+         DS    2
+         DS    2
+         SKP   1
+         DFB   $FF,$F0    END OF SECTION
+         SKP   3
+         JMP   SCRN       MODULE HEADER
+         ASC   'SCRN    '
+         DS    2
+         DS    2
+         SKP   1
+         DFB   $FF,$F0    END OF SECTION
+         SKP   3
+         JMP   PLOTI      MODULE HEADER
+         ASC   'PLOTI   '
+         DS    2
+         DS    2
+         SKP   1
+         DFB   $FF,$F1    INSTRUCTIONS
+         SKP   3
+*       FIND VARIABLES AND DETERMINE TYPE OF PLOTTING
+         SKP   1
+PLOT     JSR   INPUT      SAVE REGS
+PLOTI    LDA   C          
+         BNE   PLOTIT     DON'T PLOT BLACK
+PLEX     JMP   OUTPT      EXIT IF SO
+         SKP   1
+SCRN     JSR   INPUT      SAVE REGS
+         JSR   SCRLOC     LOCATE X,Y
+         LDA   (BASL),Y   GET CHAR
+         LDX   #15
+SCRNL    CMP   PTAB,X     SCAN PTAB FOR CHAR
+         BEQ   SCRGIT
+         DEX
+         BNE   SCRNL
+SCRGIT   LDA   C+1        FOUND IT OR NOT...
+         STA   R0
+         LDA   C+2
+         STA   R0+1
+         LDY   #0
+         TXA
+         STA   (R0),Y     RETURN IN C
+         JMP   PLEX
+         SKP   1
+*       ALWAYS PLOT IN TEXT MODE
+         SKP   1
+PLOTIT   JSR   SCRLOC     LOCATE X,Y
+         LDX   C          GET COLOR NUMBER
+         LDA   PTAB,X     GET CHARACTER
+         CMP   (BASL),Y   ALREADY THERE?
+         BEQ   PLEX       YES, NOTHING TO DO
+         STA   (BASL),Y   ELSE, PUT IT INTO SCREEN
+         LDA   MODE       TEXT MODE?
+         BNE   PLEX       YES, DONE
+         SKP   1
+*       HIRES PLOTTING
+         SKP   1
+         LDA   PY
+         ASL   A          *2
+         ASL   A          *4
+         ASL   A          *8
+         ASL   A          *16
+         STA   R1         BASE LINE INDEX
+         LDA   #16
+         STA   R1+1       LINE COUNTER
+         SKP   1
+         LDA   C          FIND PROPER IMAGE TABLE
+         STA   R2
+         LDA   #0
+         STA   R2+1
+         LDX   #5         RAISE TO *32
+SFTUP    ASL   R2
+         ROL   R2+1       *2
+         DEX
+         BNE   SFTUP
+         CLC
+         LDA   IMGAD      ADD BASE OF FIRST IMAGE
+         ADC   R2
+         STA   R2
+         LDA   IMGAD+1
+         ADC   R2+1
+         STA   R2+1
+         SKP   1
+         LDA   PX         GET X COORDINATE
+         ASL   A          *2
+         TAY
+HGRLP    LDX   R1
+         LDA   HGL,X      GET LINE BASE
+         STA   R0
+         LDA   HGH,X
+         STA   R0+1
+         LDX   #0
+         LDA   (R2,X)     GET NEXT IMAGE BYTE
+         STA   (R0),Y     AND PUT ON SCREEN
+         INC   R2
+         BNE   NIR2
+         INC   R2+1
+NIR2     LDA   (R2,X)     GET SECOND IMAGE BYTE
+         INY
+         STA   (R0),Y     AND PUT ON SCREEN
+         DEY
+         INC   R2
+         BNE   NIR22
+         INC   R2+1
+NIR22    INC   R1         NEXT LINE BASE INDEX
+         DEC   R1+1
+         BNE   HGRLP      DO 16 LINES
+         JMP   PLEX       ALL DONE
+         SKP   1
+*       SCRLOC: LOCATE SCREEN LOCATION
+         SKP   1
+SCRLOC   LDA   PY         GET Y LOCATION
+         JSR   BASCLC     CALCULATE BASL,BASH
+         CLC
+         LDA   PX
+         ADC   DISP       ADD SCREEN DISPLACEMENT
+         TAY
+         RTS
+         SKP   2
+         DFB   $FF,$F4    DATA
+         SKP   1
+PTAB     DFB   $B0,$04,$59,$17,$BF,$20,$BF
+         DFB   $BF,$23,$14,$20,$BF,$13,$24
+         DFB   $16,$07
+         SKP   1
+IMG0     DFB   $00,$00,$00,$00,$00,$00,$00,$00 BLACK
+         DFB   $00,$00,$00,$00,$00,$00,$00,$00
+         DFB   $00,$00,$00,$00,$00,$00,$00,$00
+         DFB   $00,$00,$00,$00,$00,$00,$00,$00
+IMG1     DFB   $7F,$7F,$5D,$7F,$59,$77,$01,$55 DRAGON
+         DFB   $21,$55,$21,$5D,$21,$7F DRAGON
+         DFB   $29,$7D,$29,$7F,$2D,$7D DRAGON
+         DFB   $3F,$75,$7F,$75,$7F,$75 DRAGON
+         DFB   $3F,$75,$2B,$7D,$7F,$7F DRAGON
+IMG2     DFB   $FF,$FF,$FF,$FF,$BF,$FF,$9F,$FE YOU
+         DFB   $9D,$F6,$9D,$EA,$8D,$EA YOU
+         DFB   $85,$EA,$91,$EA,$DD,$EA YOU
+         DFB   $8F,$EA,$C7,$EA,$E7,$EB YOU
+         DFB   $E7,$F3,$E7,$F3,$FF,$FF YOU
+IMG3     DFB   $7F,$7F,$7F,$7A,$5F,$68,$5F,$68 WORM
+         DFB   $5F,$68,$7F,$7A,$5F,$7E WORM
+         DFB   $57,$7F,$57,$7A,$7F,$6A WORM
+         DFB   $7F,$6B,$7F,$6B,$57,$7A WORM
+         DFB   $55,$7E,$7F,$7F,$7F,$7F WORM
+IMG4     DFB   $00,$00,$00,$00,$00,$00,$00,$00
+         DFB   $00,$00,$00,$00,$00,$00,$00,$00
+         DFB   $00,$00,$00,$00,$00,$00,$00,$00
+         DFB   $00,$00,$00,$00,$00,$00,$00,$00
+IMG5     DFB   $7F,$7F,$63,$7F,$5D,$67,$63,$5B CORRIDOR
+         DFB   $7F,$67,$0F,$7C,$77,$7B CORRIDOR
+         DFB   $77,$7B,$77,$7B,$0F,$7C CORRIDOR
+         DFB   $7F,$67,$63,$5B,$5D,$5B CORRIDOR
+         DFB   $63,$5B,$7F,$67,$7F,$7F CORRIDOR
+IMG6     DFB   $00,$00,$00,$00,$00,$00,$00,$00
+         DFB   $00,$00,$00,$00,$00,$00,$00,$00
+         DFB   $00,$00,$00,$00,$00,$00,$00,$00
+         DFB   $00,$00,$00,$00,$00,$00,$00,$00
+IMG7     DFB   $00,$00,$00,$00,$00,$00,$00,$00
+         DFB   $00,$00,$00,$00,$00,$00,$00,$00
+         DFB   $00,$00,$00,$00,$00,$00,$00,$00
+         DFB   $00,$00,$00,$00,$00,$00,$00,$00
+IMG8     DFB   $FF,$FF,$AF,$FD,$AB,$F5,$AB,$F5 DOOR
+         DFB   $AA,$D5,$8A,$80,$8A,$80 DOOR
+         DFB   $A8,$D5,$A8,$D5,$A8,$D5 DOOR
+         DFB   $A8,$D5,$8A,$80,$8A,$80 DOOR
+         DFB   $AA,$D5,$AA,$D5,$FF,$FF DOOR
+IMG9     DFB   $7F,$7F,$7F,$7F,$7F,$6F,$7F,$47 TROLL
+         DFB   $7F,$46,$3F,$6C,$3F,$6C TROLL
+         DFB   $07,$60,$3B,$70,$45,$78 TROLL
+         DFB   $6D,$78,$6D,$78,$3B,$78 TROLL
+         DFB   $07,$79,$1F,$73,$7F,$7F TROLL
+IMGA     DFB   $7F,$7F,$63,$7F,$5D,$67,$63,$5B STALKER 
+         DFB   $7F,$67,$0F,$7C,$77,$7B STALKER 
+         DFB   $77,$7B,$77,$7B,$0F,$7C STALKER  
+         DFB   $7F,$67,$63,$5B,$5D,$5B STALKER 
+         DFB   $63,$5B,$7F,$67,$7F,$7F STALKER
+IMGB     DFB   $00,$00,$00,$00,$00,$00,$00,$00
+         DFB   $00,$00,$00,$00,$00,$00,$00,$00
+         DFB   $00,$00,$00,$00,$00,$00,$00,$00
+         DFB   $00,$00,$00,$00,$00,$00,$00,$00
+IMGC     DFB   $7F,$7F,$7F,$7F,$7F,$7F,$7F,$7F SLIME
+         DFB   $7F,$7F,$3F,$7D,$2F,$75 SLIME
+         DFB   $0B,$51,$2B,$55,$2B,$54 SLIME
+         DFB   $2F,$75,$3F,$7D,$7F,$7F SLIME
+         DFB   $7F,$7F,$7F,$7F,$7F,$7F SLIME
+IMGD     DFB   $FF,$FF,$FF,$FF,$FF,$FF,$8F,$F1 CHEST
+         DFB   $8B,$D1,$8B,$D1,$83,$C0 CHEST
+         DFB   $8B,$D0,$8B,$D0,$8B,$D1 CHEST
+         DFB   $8B,$D1,$83,$C0,$FF,$FF CHEST
+         DFB   $FF,$FF,$FF,$FF,$FF,$FF CHEST
+IMGE     DFB   $7F,$7F,$7F,$7F,$37,$76,$4F,$79 VAMPIRE
+         DFB   $5F,$7D,$0F,$78,$47,$71 VAMPIRE
+         DFB   $47,$71,$47,$71,$07,$70 VAMPIRE
+         DFB   $07,$70,$07,$70,$07,$70 VAMPIRE
+         DFB   $07,$70,$03,$60,$7F,$7F VAMPIRE
+IMGF     DFB   $7F,$7F,$1F,$7C,$4F,$7B,$49,$4B GHOST
+         DFB   $65,$53,$79,$5F,$73,$5F GHOST
+         DFB   $67,$6F,$4F,$77,$4F,$7B GHOST
+         DFB   $4F,$7D,$67,$7E,$33,$7F GHOST
+         DFB   $69,$7F,$7F,$7F,$7F,$7F GHOST
+         SKP   2
+         DFB   $FF,$F2    ADCONS
+         SKP   1
+IMGAD    DW    IMG0
+         SKP   2
+         DFB   $FF,$F3    GLOBALS
+         SKP   1
+INPUT    JMP   $0
+         ASC   'INPUT   '
+OUTPT    JMP   $0
+         ASC   'OUTPT   '
+         SKP   2
+         DFB   $FF,$F0    END OF SECTION
+         LST   OFF
+         CHN   COMMON.S

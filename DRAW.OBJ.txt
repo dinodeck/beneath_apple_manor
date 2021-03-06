@@ -1,0 +1,132 @@
+8000-   4C 11 80    JMP   $8011
+8003-   C4 D2       CPY   $D2
+8005-   C1 D7       CMP   ($D7,X)
+8007-   A0 A0       LDY   #$A0
+8009-   A0 A0       LDY   #$A0
+800B-   8A          TXA
+800C-   A0 A4       LDY   #$A4
+800E-   A0 FF       LDY   #$FF
+8010-   F1 20       SBC   ($20),Y
+8012-   DD 80 AD    CMP   $AD80,X
+8015-   15 08       ORA   $08,X
+8017-   38          SEC
+8018-   ED 21 08    SBC   $0821
+801B-   10 02       BPL   $801F
+801D-   A9 00       LDA   #$00
+801F-   85 0C       STA   $0C
+8021-   38          SEC
+8022-   AD 15 08    LDA   $0815
+8025-   6D 21 08    ADC   $0821
+8028-   CD 0F 08    CMP   $080F
+802B-   90 03       BCC   $8030
+802D-   AD 0F 08    LDA   $080F
+8030-   85 0D       STA   $0D
+8032-   AD 18 08    LDA   $0818
+8035-   38          SEC
+8036-   ED 21 08    SBC   $0821
+8039-   10 02       BPL   $803D
+803B-   A9 00       LDA   #$00
+803D-   85 0E       STA   $0E
+803F-   38          SEC
+8040-   AD 18 08    LDA   $0818
+8043-   6D 21 08    ADC   $0821
+8046-   CD 0C 08    CMP   $080C
+8049-   90 03       BCC   $804E
+804B-   AD 0C 08    LDA   $080C
+804E-   85 0F       STA   $0F
+8050-   A5 0D       LDA   $0D
+8052-   38          SEC
+8053-   E5 0C       SBC   $0C
+8055-   0A          ASL
+8056-   85 00       STA   $00
+8058-   AD 0F 08    LDA   $080F
+805B-   0A          ASL
+805C-   38          SEC
+805D-   E5 00       SBC   $00
+805F-   85 10       STA   $10
+8061-   A5 0E       LDA   $0E
+8063-   8D 18 08    STA   $0818
+8066-   0A          ASL
+8067-   85 54       STA   $54
+8069-   AD 0F 08    LDA   $080F
+806C-   85 50       STA   $50
+806E-   A9 00       LDA   #$00
+8070-   85 51       STA   $51
+8072-   85 52       STA   $52
+8074-   85 53       STA   $53
+8076-   85 55       STA   $55
+8078-   20 FE 80    JSR   $80FE
+807B-   A5 0C       LDA   $0C
+807D-   8D 15 08    STA   $0815
+8080-   0A          ASL
+8081-   18          CLC
+8082-   65 50       ADC   $50
+8084-   85 50       STA   $50
+8086-   A9 00       LDA   #$00
+8088-   65 51       ADC   $51
+808A-   85 51       STA   $51
+808C-   AD 1F 08    LDA   $081F
+808F-   18          CLC
+8090-   65 50       ADC   $50
+8092-   85 04       STA   $04
+8094-   AD 20 08    LDA   $0820
+8097-   65 51       ADC   $51
+8099-   85 05       STA   $05
+809B-   A0 00       LDY   #$00
+809D-   B1 04       LDA   ($04),Y
+809F-   8D 1B 08    STA   $081B
+80A2-   20 F3 80    JSR   $80F3
+80A5-   18          CLC
+80A6-   A5 04       LDA   $04
+80A8-   69 02       ADC   #$02
+80AA-   85 04       STA   $04
+80AC-   A5 05       LDA   $05
+80AE-   69 00       ADC   #$00
+80B0-   85 05       STA   $05
+80B2-   EE 15 08    INC   $0815
+80B5-   AD 15 08    LDA   $0815
+80B8-   C5 0D       CMP   $0D
+80BA-   90 DF       BCC   $809B
+80BC-   A5 0C       LDA   $0C
+80BE-   8D 15 08    STA   $0815
+80C1-   EE 18 08    INC   $0818
+80C4-   A5 10       LDA   $10
+80C6-   18          CLC
+80C7-   65 04       ADC   $04
+80C9-   85 04       STA   $04
+80CB-   A9 00       LDA   #$00
+80CD-   65 05       ADC   $05
+80CF-   85 05       STA   $05
+80D1-   AD 18 08    LDA   $0818
+80D4-   C5 0F       CMP   $0F
+80D6-   90 C3       BCC   $809B
+80D8-   4C E8 80    JMP   $80E8
+80DB-   FF          ???
+80DC-   F3          ???
+80DD-   4C 00 00    JMP   $0000
+80E0-   C9 CE       CMP   #$CE
+80E2-   D0 D5       BNE   $80B9
+80E4-   D4          ???
+80E5-   A0 A0       LDY   #$A0
+80E7-   A0 4C       LDY   #$4C
+80E9-   00          BRK
+80EA-   00          BRK
+80EB-   CF          ???
+80EC-   D5 D4       CMP   $D4,X
+80EE-   D0 D4       BNE   $80C4
+80F0-   A0 A0       LDY   #$A0
+80F2-   A0 4C       LDY   #$4C
+80F4-   00          BRK
+80F5-   00          BRK
+80F6-   D0 CC       BNE   $80C4
+80F8-   CF          ???
+80F9-   D4          ???
+80FA-   C9 A0       CMP   #$A0
+80FC-   A0 A0       LDY   #$A0
+80FE-   4C 00 00    JMP   $0000
+8101-   CD D5 CC    CMP   $CCD5
+8104-   D4          ???
+8105-   A0 A0       LDY   #$A0
+8107-   A0 A0       LDY   #$A0
+8109-   FF          ???
+810A-   F0 00       BEQ   $810C

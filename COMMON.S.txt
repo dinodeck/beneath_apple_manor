@@ -1,0 +1,31 @@
+         SKP   3
+*********************************************************
+*                                                       *
+*       BAMSUBSE COMMON DATA                            *
+*                                                       *
+*********************************************************
+         SKP   1
+VECTOR   DSECT
+         ORG   $800
+         JMP   0          JMP TO INIT
+         JMP   0          JMP TO PLOT
+         JMP   0          JMP TO SCRN
+         JMP   0          JMP TO DRAW
+         SKP   1
+VARS     EQU   *          BASIC VARS POINTERS
+V        DS    3             VERTICAL SCREEN HEIGHT
+H        DS    3             HORIZONTAL SCREEN WIDTH
+MODE     DS    3             0=GRAPHICS, 1=TEXT
+PX       DS    3             X COORDINATE
+PY       DS    3             Y COORDINATE
+C        DS    3             COLOR
+MAP      DS    3             MAP ARRAY
+RD       DS    3             RADIUS
+         SKP   1
+DISP     DS    1          COMPUTED SCREEN DISPLACEMENT
+         SKP   1
+HGH      DS    160        HIRES LINE STARTING ADDRESSES
+HGL      DS    160
+         SKP   1
+PGMSTR   EQU   *          PROGRAM START
+         DEND

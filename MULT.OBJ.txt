@@ -1,0 +1,30 @@
+0800-   4C 11 08    JMP   $0811
+0803-   CD D5 CC    CMP   $CCD5
+0806-   D4          ???
+0807-   A0 A0       LDY   #$A0
+0809-   A0 A0       LDY   #$A0
+080B-   00          BRK
+080C-   00          BRK
+080D-   00          BRK
+080E-   00          BRK
+080F-   FF          ???
+0810-   F1 A0       SBC   ($A0),Y
+0812-   10 A5       BPL   $07B9
+0814-   50 4A       BVC   $0860
+0816-   90 0C       BCC   $0824
+0818-   18          CLC
+0819-   A2 FE       LDX   #$FE
+081B-   B5 54       LDA   $54,X
+081D-   75 56       ADC   $56,X
+081F-   95 54       STA   $54,X
+0821-   E8          INX
+0822-   D0 F7       BNE   $081B
+0824-   A2 03       LDX   #$03
+0826-   76 50       ROR   $50,X
+0828-   CA          DEX
+0829-   10 FB       BPL   $0826
+082B-   88          DEY
+082C-   D0 E5       BNE   $0813
+082E-   60          RTS
+082F-   FF          ???
+0830-   F0 00       BEQ   $0832

@@ -1,0 +1,899 @@
+0A00-   4C 11 0A    JMP   $0A11
+0A03-   C9 CE       CMP   #$CE
+0A05-   C9 D4       CMP   #$D4
+0A07-   A0 A0       LDY   #$A0
+0A09-   A0 A0       LDY   #$A0
+0A0B-   B1 0A       LDA   ($0A),Y
+0A0D-   00          BRK
+0A0E-   00          BRK
+0A0F-   FF          ???
+0A10-   F1 20       SBC   ($20),Y
+0A12-   C2          ???
+0A13-   0A          ASL
+0A14-   A9 00       LDA   #$00
+0A16-   8D 24 08    STA   $0824
+0A19-   AD 12 08    LDA   $0812
+0A1C-   D0 27       BNE   $0A45
+0A1E-   A9 00       LDA   #$00
+0A20-   85 00       STA   $00
+0A22-   A9 20       LDA   #$20
+0A24-   85 01       STA   $01
+0A26-   A0 00       LDY   #$00
+0A28-   98          TYA
+0A29-   91 00       STA   ($00),Y
+0A2B-   C8          INY
+0A2C-   D0 FB       BNE   $0A29
+0A2E-   E6 01       INC   $01
+0A30-   A5 01       LDA   $01
+0A32-   C9 40       CMP   #$40
+0A34-   90 F0       BCC   $0A26
+0A36-   AD 53 C0    LDA   $C053    rw:MIXSET
+0A39-   AD 50 C0    LDA   $C050    rw:TXTCLR
+0A3C-   AD 57 C0    LDA   $C057    rw:HIRES
+0A3F-   20 74 0A    JSR   $0A74
+0A42-   4C 52 0A    JMP   $0A52
+0A45-   AD 51 C0    LDA   $C051    rw:TXTSET
+0A48-   A9 28       LDA   #$28
+0A4A-   38          SEC
+0A4B-   ED 0F 08    SBC   $080F
+0A4E-   4A          LSR
+0A4F-   8D 24 08    STA   $0824
+0A52-   A5 24       LDA   $24
+0A54-   48          PHA
+0A55-   A5 25       LDA   $25
+0A57-   48          PHA
+0A58-   A9 00       LDA   #$00
+0A5A-   85 22       STA   $22
+0A5C-   A9 14       LDA   #$14
+0A5E-   85 23       STA   $23
+0A60-   20 58 FC    JSR   $FC58    F8ROM:HOME
+0A63-   68          PLA
+0A64-   85 25       STA   $25
+0A66-   68          PLA
+0A67-   85 24       STA   $24
+0A69-   A9 14       LDA   #$14
+0A6B-   85 22       STA   $22
+0A6D-   A9 17       LDA   #$17
+0A6F-   85 23       STA   $23
+0A71-   4C 0D 0B    JMP   $0B0D
+0A74-   A9 00       LDA   #$00
+0A76-   85 00       STA   $00
+0A78-   A5 00       LDA   $00
+0A7A-   29 C0       AND   #$C0
+0A7C-   85 06       STA   $06
+0A7E-   4A          LSR
+0A7F-   4A          LSR
+0A80-   05 06       ORA   $06
+0A82-   85 06       STA   $06
+0A84-   A5 00       LDA   $00
+0A86-   85 07       STA   $07
+0A88-   0A          ASL
+0A89-   0A          ASL
+0A8A-   0A          ASL
+0A8B-   26 07       ROL   $07
+0A8D-   0A          ASL
+0A8E-   26 07       ROL   $07
+0A90-   0A          ASL
+0A91-   66 06       ROR   $06
+0A93-   A5 07       LDA   $07
+0A95-   29 1F       AND   #$1F
+0A97-   09 20       ORA   #$20
+0A99-   85 07       STA   $07
+0A9B-   A6 00       LDX   $00
+0A9D-   A5 06       LDA   $06
+0A9F-   9D C5 08    STA   $08C5,X
+0AA2-   A5 07       LDA   $07
+0AA4-   9D 25 08    STA   $0825,X
+0AA7-   E8          INX
+0AA8-   86 00       STX   $00
+0AAA-   E0 A0       CPX   #$A0
+0AAC-   90 CA       BCC   $0A78
+0AAE-   60          RTS
+0AAF-   FF          ???
+0AB0-   F0 4C       BEQ   $0AFE
+0AB2-   C2          ???
+0AB3-   0A          ASL
+0AB4-   C9 CE       CMP   #$CE
+0AB6-   D0 D5       BNE   $0A8D
+0AB8-   D4          ???
+0AB9-   A0 A0       LDY   #$A0
+0ABB-   A0 FC       LDY   #$FC
+0ABD-   0A          ASL
+0ABE-   02          ???
+0ABF-   00          BRK
+0AC0-   FF          ???
+0AC1-   F1 8D       SBC   ($8D),Y
+0AC3-   23          ???
+0AC4-   0B          ???
+0AC5-   8C 25 0B    STY   $0B25
+0AC8-   8E 24 0B    STX   $0B24
+0ACB-   A5 28       LDA   $28
+0ACD-   8D 26 0B    STA   $0B26
+0AD0-   A5 29       LDA   $29
+0AD2-   8D 27 0B    STA   $0B27
+0AD5-   A9 0C       LDA   #$0C
+0AD7-   85 00       STA   $00
+0AD9-   A9 08       LDA   #$08
+0ADB-   85 01       STA   $01
+0ADD-   A2 08       LDX   #$08
+0ADF-   A0 02       LDY   #$02
+0AE1-   B1 00       LDA   ($00),Y
+0AE3-   85 07       STA   $07
+0AE5-   88          DEY
+0AE6-   B1 00       LDA   ($00),Y
+0AE8-   85 06       STA   $06
+0AEA-   88          DEY
+0AEB-   B1 06       LDA   ($06),Y
+0AED-   91 00       STA   ($00),Y
+0AEF-   18          CLC
+0AF0-   E6 00       INC   $00
+0AF2-   E6 00       INC   $00
+0AF4-   E6 00       INC   $00
+0AF6-   CA          DEX
+0AF7-   D0 E6       BNE   $0ADF
+0AF9-   60          RTS
+0AFA-   FF          ???
+0AFB-   F0 4C       BEQ   $0B49
+0AFD-   0D 0B CF    ORA   $CF0B
+0B00-   D5 D4       CMP   $D4,X
+0B02-   D0 D4       BNE   $0AD8
+0B04-   A0 A0       LDY   #$A0
+0B06-   A0 4D       LDY   #$4D
+0B08-   0B          ???
+0B09-   02          ???
+0B0A-   00          BRK
+0B0B-   FF          ???
+0B0C-   F1 AD       SBC   ($AD),Y
+0B0E-   26 0B       ROL   $0B
+0B10-   85 28       STA   $28
+0B12-   AD 27 0B    LDA   $0B27
+0B15-   85 29       STA   $29
+0B17-   AD 23 0B    LDA   $0B23
+0B1A-   AC 25 0B    LDY   $0B25
+0B1D-   AE 24 0B    LDX   $0B24
+0B20-   60          RTS
+0B21-   FF          ???
+0B22-   F4          ???
+0B23-   8B          ???
+0B24-   A0 85       LDY   #$85
+0B26-   A0 A0       LDY   #$A0
+0B28-   FF          ???
+0B29-   F3          ???
+0B2A-   4C 4D 0B    JMP   $0B4D
+0B2D-   D0 CC       BNE   $0AFB
+0B2F-   CF          ???
+0B30-   D4          ???
+0B31-   A0 A0       LDY   #$A0
+0B33-   A0 A0       LDY   #$A0
+0B35-   4C 5E 0B    JMP   $0B5E
+0B38-   D3          ???
+0B39-   C3          ???
+0B3A-   D2 CE       CMP   ($CE)
+0B3C-   A0 A0       LDY   #$A0
+0B3E-   A0 A0       LDY   #$A0
+0B40-   4C 62 0E    JMP   $0E62
+0B43-   C4 D2       CPY   $D2
+0B45-   C1 D7       CMP   ($D7,X)
+0B47-   A0 A0       LDY   #$A0
+0B49-   A0 A0       LDY   #$A0
+0B4B-   FF          ???
+0B4C-   F0 4C       BEQ   $0B9A
+0B4E-   80 0B       BRA   $0B5B
+0B50-   D0 CC       BNE   $0B1E
+0B52-   CF          ???
+0B53-   D4          ???
+0B54-   A0 A0       LDY   #$A0
+0B56-   A0 A0       LDY   #$A0
+0B58-   5E 0B 01    LSR   $010B,X
+0B5B-   00          BRK
+0B5C-   FF          ???
+0B5D-   F0 4C       BEQ   $0BAB
+0B5F-   8B          ???
+0B60-   0B          ???
+0B61-   D3          ???
+0B62-   C3          ???
+0B63-   D2 CE       CMP   ($CE)
+0B65-   A0 A0       LDY   #$A0
+0B67-   A0 A0       LDY   #$A0
+0B69-   6F          ???
+0B6A-   0B          ???
+0B6B-   01 00       ORA   ($00,X)
+0B6D-   FF          ???
+0B6E-   F0 4C       BEQ   $0BBC
+0B70-   83          ???
+0B71-   0B          ???
+0B72-   D0 CC       BNE   $0B40
+0B74-   CF          ???
+0B75-   D4          ???
+0B76-   C9 A0       CMP   #$A0
+0B78-   A0 A0       LDY   #$A0
+0B7A-   62          ???
+0B7B-   0E 01 00    ASL   $0001
+0B7E-   FF          ???
+0B7F-   F1 20       SBC   ($20),Y
+0B81-   4A          LSR
+0B82-   0E AD 1B    ASL   $1BAD
+0B85-   08          PHP
+0B86-   D0 27       BNE   $0BAF
+0B88-   4C 55 0E    JMP   $0E55
+0B8B-   20 4A 0E    JSR   $0E4A
+0B8E-   20 23 0C    JSR   $0C23
+0B91-   B1 28       LDA   ($28),Y
+0B93-   A2 0F       LDX   #$0F
+0B95-   DD 34 0C    CMP   $0C34,X
+0B98-   F0 03       BEQ   $0B9D
+0B9A-   CA          DEX
+0B9B-   D0 F8       BNE   $0B95
+0B9D-   AD 1C 08    LDA   $081C
+0BA0-   85 00       STA   $00
+0BA2-   AD 1D 08    LDA   $081D
+0BA5-   85 01       STA   $01
+0BA7-   A0 00       LDY   #$00
+0BA9-   8A          TXA
+0BAA-   91 00       STA   ($00),Y
+0BAC-   4C 88 0B    JMP   $0B88
+0BAF-   20 23 0C    JSR   $0C23
+0BB2-   AE 1B 08    LDX   $081B
+0BB5-   BD 34 0C    LDA   $0C34,X
+0BB8-   D1 28       CMP   ($28),Y
+0BBA-   F0 CC       BEQ   $0B88
+0BBC-   91 28       STA   ($28),Y
+0BBE-   AD 12 08    LDA   $0812
+0BC1-   D0 C5       BNE   $0B88
+0BC3-   AD 18 08    LDA   $0818
+0BC6-   0A          ASL
+0BC7-   0A          ASL
+0BC8-   0A          ASL
+0BC9-   0A          ASL
+0BCA-   85 06       STA   $06
+0BCC-   A9 10       LDA   #$10
+0BCE-   85 07       STA   $07
+0BD0-   AD 1B 08    LDA   $081B
+0BD3-   85 08       STA   $08
+0BD5-   A9 00       LDA   #$00
+0BD7-   85 09       STA   $09
+0BD9-   A2 05       LDX   #$05
+0BDB-   06 08       ASL   $08
+0BDD-   26 09       ROL   $09
+0BDF-   CA          DEX
+0BE0-   D0 F9       BNE   $0BDB
+0BE2-   18          CLC
+0BE3-   AD 46 0E    LDA   $0E46
+0BE6-   65 08       ADC   $08
+0BE8-   85 08       STA   $08
+0BEA-   AD 47 0E    LDA   $0E47
+0BED-   65 09       ADC   $09
+0BEF-   85 09       STA   $09
+0BF1-   AD 15 08    LDA   $0815
+0BF4-   0A          ASL
+0BF5-   A8          TAY
+0BF6-   A6 06       LDX   $06
+0BF8-   BD C5 08    LDA   $08C5,X
+0BFB-   85 00       STA   $00
+0BFD-   BD 25 08    LDA   $0825,X
+0C00-   85 01       STA   $01
+0C02-   A2 00       LDX   #$00
+0C04-   A1 08       LDA   ($08,X)
+0C06-   91 00       STA   ($00),Y
+0C08-   E6 08       INC   $08
+0C0A-   D0 02       BNE   $0C0E
+0C0C-   E6 09       INC   $09
+0C0E-   A1 08       LDA   ($08,X)
+0C10-   C8          INY
+0C11-   91 00       STA   ($00),Y
+0C13-   88          DEY
+0C14-   E6 08       INC   $08
+0C16-   D0 02       BNE   $0C1A
+0C18-   E6 09       INC   $09
+0C1A-   E6 06       INC   $06
+0C1C-   C6 07       DEC   $07
+0C1E-   D0 D6       BNE   $0BF6
+0C20-   4C 88 0B    JMP   $0B88
+0C23-   AD 18 08    LDA   $0818
+0C26-   20 C1 FB    JSR   $FBC1    F8ROM:BASCALC
+0C29-   18          CLC
+0C2A-   AD 15 08    LDA   $0815
+0C2D-   6D 24 08    ADC   $0824
+0C30-   A8          TAY
+0C31-   60          RTS
+0C32-   FF          ???
+0C33-   F4          ???
+0C34-   B0 04       BCS   $0C3A
+0C36-   59 17 BF    EOR   $BF17,Y
+0C39-   20 BF BF    JSR   $BFBF
+0C3C-   23          ???
+0C3D-   14 20       TRB   $20
+0C3F-   BF          ???
+0C40-   13          ???
+0C41-   24 16       BIT   $16
+0C43-   07          ???
+0C44-   00          BRK
+0C45-   00          BRK
+0C46-   00          BRK
+0C47-   00          BRK
+0C48-   00          BRK
+0C49-   00          BRK
+0C4A-   00          BRK
+0C4B-   00          BRK
+0C4C-   00          BRK
+0C4D-   00          BRK
+0C4E-   00          BRK
+0C4F-   00          BRK
+0C50-   00          BRK
+0C51-   00          BRK
+0C52-   00          BRK
+0C53-   00          BRK
+0C54-   00          BRK
+0C55-   00          BRK
+0C56-   00          BRK
+0C57-   00          BRK
+0C58-   00          BRK
+0C59-   00          BRK
+0C5A-   00          BRK
+0C5B-   00          BRK
+0C5C-   00          BRK
+0C5D-   00          BRK
+0C5E-   00          BRK
+0C5F-   00          BRK
+0C60-   00          BRK
+0C61-   00          BRK
+0C62-   00          BRK
+0C63-   00          BRK
+0C64-   7F          ???
+0C65-   7F          ???
+0C66-   5D 7F 59    EOR   $597F,X
+0C69-   77          ???
+0C6A-   01 55       ORA   ($55,X)
+0C6C-   21 55       AND   ($55,X)
+0C6E-   21 5D       AND   ($5D,X)
+0C70-   21 7F       AND   ($7F,X)
+0C72-   29 7D       AND   #$7D
+0C74-   29 7F       AND   #$7F
+0C76-   2D 7D 3F    AND   $3F7D
+0C79-   75 7F       ADC   $7F,X
+0C7B-   75 7F       ADC   $7F,X
+0C7D-   75 3F       ADC   $3F,X
+0C7F-   75 2B       ADC   $2B,X
+0C81-   7D 7F 7F    ADC   $7F7F,X
+0C84-   FF          ???
+0C85-   FF          ???
+0C86-   FF          ???
+0C87-   FF          ???
+0C88-   BF          ???
+0C89-   FF          ???
+0C8A-   9F          ???
+0C8B-   FE 9D F6    INC   $F69D,X
+0C8E-   9D EA 8D    STA   $8DEA,X
+0C91-   EA          NOP
+0C92-   85 EA       STA   $EA
+0C94-   91 EA       STA   ($EA),Y
+0C96-   DD EA 8F    CMP   $8FEA,X
+0C99-   EA          NOP
+0C9A-   C7          ???
+0C9B-   EA          NOP
+0C9C-   E7          ???
+0C9D-   EB          ???
+0C9E-   E7          ???
+0C9F-   F3          ???
+0CA0-   E7          ???
+0CA1-   F3          ???
+0CA2-   FF          ???
+0CA3-   FF          ???
+0CA4-   7F          ???
+0CA5-   7F          ???
+0CA6-   7F          ???
+0CA7-   7A          PLY
+0CA8-   5F          ???
+0CA9-   68          PLA
+0CAA-   5F          ???
+0CAB-   68          PLA
+0CAC-   5F          ???
+0CAD-   68          PLA
+0CAE-   7F          ???
+0CAF-   7A          PLY
+0CB0-   5F          ???
+0CB1-   7E 57 7F    ROR   $7F57,X
+0CB4-   57          ???
+0CB5-   7A          PLY
+0CB6-   7F          ???
+0CB7-   6A          ROR
+0CB8-   7F          ???
+0CB9-   6B          ???
+0CBA-   7F          ???
+0CBB-   6B          ???
+0CBC-   57          ???
+0CBD-   7A          PLY
+0CBE-   55 7E       EOR   $7E,X
+0CC0-   7F          ???
+0CC1-   7F          ???
+0CC2-   7F          ???
+0CC3-   7F          ???
+0CC4-   00          BRK
+0CC5-   00          BRK
+0CC6-   00          BRK
+0CC7-   00          BRK
+0CC8-   00          BRK
+0CC9-   00          BRK
+0CCA-   00          BRK
+0CCB-   00          BRK
+0CCC-   00          BRK
+0CCD-   00          BRK
+0CCE-   00          BRK
+0CCF-   00          BRK
+0CD0-   00          BRK
+0CD1-   00          BRK
+0CD2-   00          BRK
+0CD3-   00          BRK
+0CD4-   00          BRK
+0CD5-   00          BRK
+0CD6-   00          BRK
+0CD7-   00          BRK
+0CD8-   00          BRK
+0CD9-   00          BRK
+0CDA-   00          BRK
+0CDB-   00          BRK
+0CDC-   00          BRK
+0CDD-   00          BRK
+0CDE-   00          BRK
+0CDF-   00          BRK
+0CE0-   00          BRK
+0CE1-   00          BRK
+0CE2-   00          BRK
+0CE3-   00          BRK
+0CE4-   7F          ???
+0CE5-   7F          ???
+0CE6-   63          ???
+0CE7-   7F          ???
+0CE8-   5D 67 63    EOR   $6367,X
+0CEB-   5B          ???
+0CEC-   7F          ???
+0CED-   67          ???
+0CEE-   0F          ???
+0CEF-   7C 77 7B    JMP   ($7B77,X)
+0CF2-   77          ???
+0CF3-   7B          ???
+0CF4-   77          ???
+0CF5-   7B          ???
+0CF6-   0F          ???
+0CF7-   7C 7F 67    JMP   ($677F,X)
+0CFA-   63          ???
+0CFB-   5B          ???
+0CFC-   5D 5B 63    EOR   $635B,X
+0CFF-   5B          ???
+0D00-   7F          ???
+0D01-   67          ???
+0D02-   7F          ???
+0D03-   7F          ???
+0D04-   00          BRK
+0D05-   00          BRK
+0D06-   00          BRK
+0D07-   00          BRK
+0D08-   00          BRK
+0D09-   00          BRK
+0D0A-   00          BRK
+0D0B-   00          BRK
+0D0C-   00          BRK
+0D0D-   00          BRK
+0D0E-   00          BRK
+0D0F-   00          BRK
+0D10-   00          BRK
+0D11-   00          BRK
+0D12-   00          BRK
+0D13-   00          BRK
+0D14-   00          BRK
+0D15-   00          BRK
+0D16-   00          BRK
+0D17-   00          BRK
+0D18-   00          BRK
+0D19-   00          BRK
+0D1A-   00          BRK
+0D1B-   00          BRK
+0D1C-   00          BRK
+0D1D-   00          BRK
+0D1E-   00          BRK
+0D1F-   00          BRK
+0D20-   00          BRK
+0D21-   00          BRK
+0D22-   00          BRK
+0D23-   00          BRK
+0D24-   00          BRK
+0D25-   00          BRK
+0D26-   00          BRK
+0D27-   00          BRK
+0D28-   00          BRK
+0D29-   00          BRK
+0D2A-   00          BRK
+0D2B-   00          BRK
+0D2C-   00          BRK
+0D2D-   00          BRK
+0D2E-   00          BRK
+0D2F-   00          BRK
+0D30-   00          BRK
+0D31-   00          BRK
+0D32-   00          BRK
+0D33-   00          BRK
+0D34-   00          BRK
+0D35-   00          BRK
+0D36-   00          BRK
+0D37-   00          BRK
+0D38-   00          BRK
+0D39-   00          BRK
+0D3A-   00          BRK
+0D3B-   00          BRK
+0D3C-   00          BRK
+0D3D-   00          BRK
+0D3E-   00          BRK
+0D3F-   00          BRK
+0D40-   00          BRK
+0D41-   00          BRK
+0D42-   00          BRK
+0D43-   00          BRK
+0D44-   FF          ???
+0D45-   FF          ???
+0D46-   AF          ???
+0D47-   FD AB F5    SBC   $F5AB,X
+0D4A-   AB          ???
+0D4B-   F5 AA       SBC   $AA,X
+0D4D-   D5 8A       CMP   $8A,X
+0D4F-   80 8A       BRA   $0CDB
+0D51-   80 A8       BRA   $0CFB
+0D53-   D5 A8       CMP   $A8,X
+0D55-   D5 A8       CMP   $A8,X
+0D57-   D5 A8       CMP   $A8,X
+0D59-   D5 8A       CMP   $8A,X
+0D5B-   80 8A       BRA   $0CE7
+0D5D-   80 AA       BRA   $0D09
+0D5F-   D5 AA       CMP   $AA,X
+0D61-   D5 FF       CMP   $FF,X
+0D63-   FF          ???
+0D64-   7F          ???
+0D65-   7F          ???
+0D66-   7F          ???
+0D67-   7F          ???
+0D68-   7F          ???
+0D69-   6F          ???
+0D6A-   7F          ???
+0D6B-   47          ???
+0D6C-   7F          ???
+0D6D-   46 3F       LSR   $3F
+0D6F-   6C 3F 6C    JMP   ($6C3F)
+0D72-   07          ???
+0D73-   60          RTS
+0D74-   3B          ???
+0D75-   70 45       BVS   $0DBC
+0D77-   78          SEI
+0D78-   6D 78 6D    ADC   $6D78
+0D7B-   78          SEI
+0D7C-   3B          ???
+0D7D-   78          SEI
+0D7E-   07          ???
+0D7F-   79 1F 73    ADC   $731F,Y
+0D82-   7F          ???
+0D83-   7F          ???
+0D84-   7F          ???
+0D85-   7F          ???
+0D86-   63          ???
+0D87-   7F          ???
+0D88-   5D 67 63    EOR   $6367,X
+0D8B-   5B          ???
+0D8C-   7F          ???
+0D8D-   67          ???
+0D8E-   0F          ???
+0D8F-   7C 77 7B    JMP   ($7B77,X)
+0D92-   77          ???
+0D93-   7B          ???
+0D94-   77          ???
+0D95-   7B          ???
+0D96-   0F          ???
+0D97-   7C 7F 67    JMP   ($677F,X)
+0D9A-   63          ???
+0D9B-   5B          ???
+0D9C-   5D 5B 63    EOR   $635B,X
+0D9F-   5B          ???
+0DA0-   7F          ???
+0DA1-   67          ???
+0DA2-   7F          ???
+0DA3-   7F          ???
+0DA4-   00          BRK
+0DA5-   00          BRK
+0DA6-   00          BRK
+0DA7-   00          BRK
+0DA8-   00          BRK
+0DA9-   00          BRK
+0DAA-   00          BRK
+0DAB-   00          BRK
+0DAC-   00          BRK
+0DAD-   00          BRK
+0DAE-   00          BRK
+0DAF-   00          BRK
+0DB0-   00          BRK
+0DB1-   00          BRK
+0DB2-   00          BRK
+0DB3-   00          BRK
+0DB4-   00          BRK
+0DB5-   00          BRK
+0DB6-   00          BRK
+0DB7-   00          BRK
+0DB8-   00          BRK
+0DB9-   00          BRK
+0DBA-   00          BRK
+0DBB-   00          BRK
+0DBC-   00          BRK
+0DBD-   00          BRK
+0DBE-   00          BRK
+0DBF-   00          BRK
+0DC0-   00          BRK
+0DC1-   00          BRK
+0DC2-   00          BRK
+0DC3-   00          BRK
+0DC4-   7F          ???
+0DC5-   7F          ???
+0DC6-   7F          ???
+0DC7-   7F          ???
+0DC8-   7F          ???
+0DC9-   7F          ???
+0DCA-   7F          ???
+0DCB-   7F          ???
+0DCC-   7F          ???
+0DCD-   7F          ???
+0DCE-   3F          ???
+0DCF-   7D 2F 75    ADC   $752F,X
+0DD2-   0B          ???
+0DD3-   51 2B       EOR   ($2B),Y
+0DD5-   55 2B       EOR   $2B,X
+0DD7-   54          ???
+0DD8-   2F          ???
+0DD9-   75 3F       ADC   $3F,X
+0DDB-   7D 7F 7F    ADC   $7F7F,X
+0DDE-   7F          ???
+0DDF-   7F          ???
+0DE0-   7F          ???
+0DE1-   7F          ???
+0DE2-   7F          ???
+0DE3-   7F          ???
+0DE4-   FF          ???
+0DE5-   FF          ???
+0DE6-   FF          ???
+0DE7-   FF          ???
+0DE8-   FF          ???
+0DE9-   FF          ???
+0DEA-   8F          ???
+0DEB-   F1 8B       SBC   ($8B),Y
+0DED-   D1 8B       CMP   ($8B),Y
+0DEF-   D1 83       CMP   ($83),Y
+0DF1-   C0 8B       CPY   #$8B
+0DF3-   D0 8B       BNE   $0D80
+0DF5-   D0 8B       BNE   $0D82
+0DF7-   D1 8B       CMP   ($8B),Y
+0DF9-   D1 83       CMP   ($83),Y
+0DFB-   C0 FF       CPY   #$FF
+0DFD-   FF          ???
+0DFE-   FF          ???
+0DFF-   FF          ???
+0E00-   FF          ???
+0E01-   FF          ???
+0E02-   FF          ???
+0E03-   FF          ???
+0E04-   7F          ???
+0E05-   7F          ???
+0E06-   7F          ???
+0E07-   7F          ???
+0E08-   37          ???
+0E09-   76 4F       ROR   $4F,X
+0E0B-   79 5F 7D    ADC   $7D5F,Y
+0E0E-   0F          ???
+0E0F-   78          SEI
+0E10-   47          ???
+0E11-   71 47       ADC   ($47),Y
+0E13-   71 47       ADC   ($47),Y
+0E15-   71 07       ADC   ($07),Y
+0E17-   70 07       BVS   $0E20
+0E19-   70 07       BVS   $0E22
+0E1B-   70 07       BVS   $0E24
+0E1D-   70 07       BVS   $0E26
+0E1F-   70 03       BVS   $0E24
+0E21-   60          RTS
+0E22-   7F          ???
+0E23-   7F          ???
+0E24-   7F          ???
+0E25-   7F          ???
+0E26-   1F          ???
+0E27-   7C 4F 7B    JMP   ($7B4F,X)
+0E2A-   49 4B       EOR   #$4B
+0E2C-   65 53       ADC   $53
+0E2E-   79 5F 73    ADC   $735F,Y
+0E31-   5F          ???
+0E32-   67          ???
+0E33-   6F          ???
+0E34-   4F          ???
+0E35-   77          ???
+0E36-   4F          ???
+0E37-   7B          ???
+0E38-   4F          ???
+0E39-   7D 67 7E    ADC   $7E67,X
+0E3C-   33          ???
+0E3D-   7F          ???
+0E3E-   69 7F       ADC   #$7F
+0E40-   7F          ???
+0E41-   7F          ???
+0E42-   7F          ???
+0E43-   7F          ???
+0E44-   FF          ???
+0E45-   F2 44       SBC   ($44)
+0E47-   0C FF F3    TSB   $F3FF
+0E4A-   4C B1 0A    JMP   $0AB1
+0E4D-   C9 CE       CMP   #$CE
+0E4F-   D0 D5       BNE   $0E26
+0E51-   D4          ???
+0E52-   A0 A0       LDY   #$A0
+0E54-   A0 4C       LDY   #$4C
+0E56-   FC          ???
+0E57-   0A          ASL
+0E58-   CF          ???
+0E59-   D5 D4       CMP   $D4,X
+0E5B-   D0 D4       BNE   $0E31
+0E5D-   A0 A0       LDY   #$A0
+0E5F-   A0 FF       LDY   #$FF
+0E61-   F0 4C       BEQ   $0EAF
+0E63-   73          ???
+0E64-   0E C4 D2    ASL   $D2C4
+0E67-   C1 D7       CMP   ($D7,X)
+0E69-   A0 A0       LDY   #$A0
+0E6B-   A0 A0       LDY   #$A0
+0E6D-   6D 0F 01    ADC   $010F
+0E70-   00          BRK
+0E71-   FF          ???
+0E72-   F1 20       SBC   ($20),Y
+0E74-   3F          ???
+0E75-   0F          ???
+0E76-   AD 15 08    LDA   $0815
+0E79-   38          SEC
+0E7A-   ED 21 08    SBC   $0821
+0E7D-   10 02       BPL   $0E81
+0E7F-   A9 00       LDA   #$00
+0E81-   85 0C       STA   $0C
+0E83-   38          SEC
+0E84-   AD 15 08    LDA   $0815
+0E87-   6D 21 08    ADC   $0821
+0E8A-   CD 0F 08    CMP   $080F
+0E8D-   90 03       BCC   $0E92
+0E8F-   AD 0F 08    LDA   $080F
+0E92-   85 0D       STA   $0D
+0E94-   AD 18 08    LDA   $0818
+0E97-   38          SEC
+0E98-   ED 21 08    SBC   $0821
+0E9B-   10 02       BPL   $0E9F
+0E9D-   A9 00       LDA   #$00
+0E9F-   85 0E       STA   $0E
+0EA1-   38          SEC
+0EA2-   AD 18 08    LDA   $0818
+0EA5-   6D 21 08    ADC   $0821
+0EA8-   CD 0C 08    CMP   $080C
+0EAB-   90 03       BCC   $0EB0
+0EAD-   AD 0C 08    LDA   $080C
+0EB0-   85 0F       STA   $0F
+0EB2-   A5 0D       LDA   $0D
+0EB4-   38          SEC
+0EB5-   E5 0C       SBC   $0C
+0EB7-   0A          ASL
+0EB8-   85 00       STA   $00
+0EBA-   AD 0F 08    LDA   $080F
+0EBD-   0A          ASL
+0EBE-   38          SEC
+0EBF-   E5 00       SBC   $00
+0EC1-   85 10       STA   $10
+0EC3-   A5 0E       LDA   $0E
+0EC5-   8D 18 08    STA   $0818
+0EC8-   0A          ASL
+0EC9-   85 54       STA   $54
+0ECB-   AD 0F 08    LDA   $080F
+0ECE-   85 50       STA   $50
+0ED0-   A9 00       LDA   #$00
+0ED2-   85 51       STA   $51
+0ED4-   85 52       STA   $52
+0ED6-   85 53       STA   $53
+0ED8-   85 55       STA   $55
+0EDA-   20 60 0F    JSR   $0F60
+0EDD-   A5 0C       LDA   $0C
+0EDF-   8D 15 08    STA   $0815
+0EE2-   0A          ASL
+0EE3-   18          CLC
+0EE4-   65 50       ADC   $50
+0EE6-   85 50       STA   $50
+0EE8-   A9 00       LDA   #$00
+0EEA-   65 51       ADC   $51
+0EEC-   85 51       STA   $51
+0EEE-   AD 1F 08    LDA   $081F
+0EF1-   18          CLC
+0EF2-   65 50       ADC   $50
+0EF4-   85 04       STA   $04
+0EF6-   AD 20 08    LDA   $0820
+0EF9-   65 51       ADC   $51
+0EFB-   85 05       STA   $05
+0EFD-   A0 00       LDY   #$00
+0EFF-   B1 04       LDA   ($04),Y
+0F01-   8D 1B 08    STA   $081B
+0F04-   20 55 0F    JSR   $0F55
+0F07-   18          CLC
+0F08-   A5 04       LDA   $04
+0F0A-   69 02       ADC   #$02
+0F0C-   85 04       STA   $04
+0F0E-   A5 05       LDA   $05
+0F10-   69 00       ADC   #$00
+0F12-   85 05       STA   $05
+0F14-   EE 15 08    INC   $0815
+0F17-   AD 15 08    LDA   $0815
+0F1A-   C5 0D       CMP   $0D
+0F1C-   90 DF       BCC   $0EFD
+0F1E-   A5 0C       LDA   $0C
+0F20-   8D 15 08    STA   $0815
+0F23-   EE 18 08    INC   $0818
+0F26-   A5 10       LDA   $10
+0F28-   18          CLC
+0F29-   65 04       ADC   $04
+0F2B-   85 04       STA   $04
+0F2D-   A9 00       LDA   #$00
+0F2F-   65 05       ADC   $05
+0F31-   85 05       STA   $05
+0F33-   AD 18 08    LDA   $0818
+0F36-   C5 0F       CMP   $0F
+0F38-   90 C3       BCC   $0EFD
+0F3A-   4C 4A 0F    JMP   $0F4A
+0F3D-   FF          ???
+0F3E-   F3          ???
+0F3F-   4C B1 0A    JMP   $0AB1
+0F42-   C9 CE       CMP   #$CE
+0F44-   D0 D5       BNE   $0F1B
+0F46-   D4          ???
+0F47-   A0 A0       LDY   #$A0
+0F49-   A0 4C       LDY   #$4C
+0F4B-   FC          ???
+0F4C-   0A          ASL
+0F4D-   CF          ???
+0F4E-   D5 D4       CMP   $D4,X
+0F50-   D0 D4       BNE   $0F26
+0F52-   A0 A0       LDY   #$A0
+0F54-   A0 4C       LDY   #$4C
+0F56-   6F          ???
+0F57-   0B          ???
+0F58-   D0 CC       BNE   $0F26
+0F5A-   CF          ???
+0F5B-   D4          ???
+0F5C-   C9 A0       CMP   #$A0
+0F5E-   A0 A0       LDY   #$A0
+0F60-   4C 6D 0F    JMP   $0F6D
+0F63-   CD D5 CC    CMP   $CCD5
+0F66-   D4          ???
+0F67-   A0 A0       LDY   #$A0
+0F69-   A0 A0       LDY   #$A0
+0F6B-   FF          ???
+0F6C-   F0 4C       BEQ   $0FBA
+0F6E-   7E 0F CD    ROR   $CD0F,X
+0F71-   D5 CC       CMP   $CC,X
+0F73-   D4          ???
+0F74-   A0 A0       LDY   #$A0
+0F76-   A0 A0       LDY   #$A0
+0F78-   00          BRK
+0F79-   00          BRK
+0F7A-   01 00       ORA   ($00,X)
+0F7C-   FF          ???
+0F7D-   F1 A0       SBC   ($A0),Y
+0F7F-   10 A5       BPL   $0F26
+0F81-   50 4A       BVC   $0FCD
+0F83-   90 0C       BCC   $0F91
+0F85-   18          CLC
+0F86-   A2 FE       LDX   #$FE
+0F88-   B5 54       LDA   $54,X
+0F8A-   75 56       ADC   $56,X
+0F8C-   95 54       STA   $54,X
+0F8E-   E8          INX
+0F8F-   D0 F7       BNE   $0F88
+0F91-   A2 03       LDX   #$03
+0F93-   76 50       ROR   $50,X
+0F95-   CA          DEX
+0F96-   10 FB       BPL   $0F93
+0F98-   88          DEY
+0F99-   D0 E5       BNE   $0F80
+0F9B-   60          RTS
+0F9C-   FF          ???
+0F9D-   F0 00       BEQ   $0F9F
